@@ -1,5 +1,6 @@
 package com.sirma;
 
+import javax.swing.*;
 import java.io.File;
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -15,6 +16,7 @@ public class Main {
         }
 
         for(Integer project : employees.keySet()) {
+            //for every project create all pairs of employees which have overlapping periods of work
             List<Employee> currentEmployees = employees.get(project);
             for(int i = 0; i < currentEmployees.size(); i++ ){
                 for(int j = i+1; j < currentEmployees.size(); j++) {
@@ -40,26 +42,31 @@ public class Main {
 
     public static List<Employee> readEmployeesFromFile(){
         List<Employee> employees = new LinkedList<>();
-        try {
-            File inputFile = new File("/Users/rosie.elize/Programming/Repositories/rosieliz-dzhurkova-employees/src/com/sirma/input.txt");
-            Scanner scanner = new Scanner(inputFile);
+        JFileChooser fileChooser = new JFileChooser("");
+        fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+        int response = fileChooser.showOpenDialog(null);
+        if (response == JFileChooser.APPROVE_OPTION) {
+            try {
+                File inputFile = fileChooser.getSelectedFile();
+                Scanner scanner = new Scanner(inputFile);
 
-            while (scanner.hasNextLine()) {
-                String line = scanner.nextLine();
-                line = line.replaceAll("\\s+","");
-                String[] parts = line.split(",");
-                assert(parts.length == 4);
-                Integer id = Integer.parseInt(parts[0]);
-                Integer projectId = Integer.parseInt(parts[1]);
-                String startDate =  parts[2].equals("NULL") ? null : parts[2];
-                String endDate =  parts[3].equals("NULL") ? null : parts[3];
-                Employee currentEmployee = new Employee(id, projectId, startDate, endDate);
-                employees.add(currentEmployee);
+                while (scanner.hasNextLine()) {
+                    String line = scanner.nextLine();
+                    line = line.replaceAll("\\s+", "");
+                    String[] parts = line.split(",");
+                    assert (parts.length == 4);
+                    Integer id = Integer.parseInt(parts[0]);
+                    Integer projectId = Integer.parseInt(parts[1]);
+                    String startDate = parts[2].equals("NULL") ? null : parts[2];
+                    String endDate = parts[3].equals("NULL") ? null : parts[3];
+                    Employee currentEmployee = new Employee(id, projectId, startDate, endDate);
+                    employees.add(currentEmployee);
+                }
+                scanner.close();
+            } catch (Exception e) {
+                System.out.println("An error occurred.");
+                e.printStackTrace();
             }
-            scanner.close();
-        } catch (Exception e) {
-            System.out.println("An error occurred.");
-            e.printStackTrace();
         }
         return employees;
     }

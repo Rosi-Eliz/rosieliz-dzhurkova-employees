@@ -20,13 +20,13 @@ public class Employee {
         if(startDate == null){
             this.startDate = new Date(System.currentTimeMillis());;
         } else {
-            this.startDate = new SimpleDateFormat("yyyy-MM-dd").parse(startDate);
+            this.startDate = DateUtilities.parseDateFrom(startDate);
         }
 
         if(endDate == null){
             this.endDate = new Date(System.currentTimeMillis());;
         } else {
-            this.endDate = new SimpleDateFormat("yyyy-MM-dd").parse(endDate);
+            this.endDate = DateUtilities.parseDateFrom(endDate);
         }
     }
 

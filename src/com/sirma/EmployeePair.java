@@ -32,11 +32,11 @@ public class EmployeePair implements Comparable<EmployeePair> {
     }
     @Override
     public boolean equals(Object o) {
-
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        EmployeePair that = (EmployeePair) o;
-        return Objects.equals(first, that.first) && Objects.equals(second, that.second);
+        EmployeePair pair = (EmployeePair) o;
+        return Objects.equals(first, pair.first) && Objects.equals(second, pair.second) ||
+                Objects.equals(first, pair.second) && Objects.equals(second, pair.first);
     }
 
     @Override
@@ -56,6 +56,7 @@ public class EmployeePair implements Comparable<EmployeePair> {
         LocalDate secondLocalEndDate = convertToLocalDateViaInstant(second.getEndDate());
 
         if (firstLocalEndDate.isBefore(firstLocalStartDate) || secondLocalEndDate.isBefore(secondLocalStartDate)) {
+            // invalid input
             overlappingDays = -1;
         } else {
             long numberOfOverlappingDates = -1;
@@ -71,6 +72,7 @@ public class EmployeePair implements Comparable<EmployeePair> {
         }
     }
 
+    // Sort in descending order by overlapping days
     @Override
     public int compareTo(EmployeePair pair) {
         return pair.getOverlappingDays() - this.overlappingDays;
