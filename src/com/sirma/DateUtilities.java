@@ -21,6 +21,10 @@ public class DateUtilities {
         knownPatterns.add(new SimpleDateFormat("yyyyddd"));
         knownPatterns.add(new SimpleDateFormat("yy/MM/dd"));
         knownPatterns.add(new SimpleDateFormat("yyyy/MM/dd"));
+        knownPatterns.add(new SimpleDateFormat("yyyy-MM-dd hh:mm:ss"));
+        knownPatterns.add(new SimpleDateFormat("d/M/yy"));
+        knownPatterns.add(new SimpleDateFormat("d-M-yyyy"));
+        knownPatterns.add(new SimpleDateFormat("d-M-yy"));
 
         for (SimpleDateFormat pattern : knownPatterns) {
             try {

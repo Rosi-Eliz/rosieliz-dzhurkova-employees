@@ -2,10 +2,8 @@ package com.sirma;
 
 import javax.swing.*;
 import java.io.File;
-import java.time.LocalDate;
-import java.time.ZoneId;
-import java.time.temporal.ChronoUnit;
 import java.util.*;
+import java.util.List;
 
 public class Main {
 
@@ -70,6 +68,25 @@ public class Main {
         }
         return employees;
     }
+
+    public static void displayDataGrid(EmployeePair pair) {
+       String[][] data = {
+               {
+                       pair.getFirst().getId().toString(),
+                       pair.getSecond().getId().toString(),
+                       pair.getFirst().getProjectId().toString(),
+                       pair.getOverlappingDays().toString()
+               }
+       };
+       String[] indicatorRow = {"Employee ID #1", "Employee ID #2", "Project ID", "Days worked"};
+       JTable table = new JTable(data, indicatorRow);
+       JFrame frame = new JFrame("Result");
+       frame.add(new JScrollPane(table));
+       frame.setSize(500, 200);
+       frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+       frame.setVisible(true);
+    }
+
     public static void main(String[] args) {
         List<Employee> employees = readEmployeesFromFile();
         HashMap<Integer, List<Employee>> groupedEmployees = groupByProjects(employees);
@@ -78,5 +95,6 @@ public class Main {
                 " and employee with id: " + pair.getSecond().getId() +
                 " have worked on project with id: " + pair.getFirst().getProjectId() +
                 " for " +pair.getOverlappingDays() + " days.");
+        displayDataGrid(pair);
     }
 }

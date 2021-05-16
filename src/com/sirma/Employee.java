@@ -1,12 +1,8 @@
 package com.sirma;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Objects;
-import java.util.concurrent.TimeUnit;
-
-import static java.time.temporal.ChronoUnit.DAYS;
 
 public class Employee {
     private Integer id;
